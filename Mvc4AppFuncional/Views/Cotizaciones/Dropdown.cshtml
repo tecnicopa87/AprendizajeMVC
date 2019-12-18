@@ -1,0 +1,44 @@
+﻿@model Mvc4AppFuncional.Models.BodegaCotizacion
+
+@{
+    ViewBag.Title = "Cotizaciones";
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<h2>Crear Cotizacion GET-POST</h2>
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    @Html.DisplayFor(m=>Model.lstbcCotizacion)
+    @Html.DisplayFor(m=>Model.lstbcCategoria)
+    @Html.DisplayFor(m=>Model.lstbcBodega)
+    @Html.DropDownListFor(m=>m.lstbcCotizacion,new SelectList(Model.lstbcCotizacion))
+<table>
+    <tr>      
+        <th>@Html.DropDownListFor(m => m.lstbcCategoria, new SelectList(Model.lstbcCategoria, "IdCategoria", "NombreCategoria")," seleccione categoria" ,new {@id="SelID" })</th>        
+    </tr>
+<tr><td><input type="submit" value="aceptar" /></td></tr>
+    
+</table>
+    <script type ="text/javascript" >
+        $(document).ready(function (){
+            $('#SelID').change( function(evt){
+                $('#NombreCategoria').val($('#SelID option:selected').text().trim());
+                alert('evento value=' + $('#SelID option:selected').text());
+            })
+            });
+    </script>
+}
+@{
+    //WebGrid grid = new WebGrid((IEnumerable<Mvc4AppFuncional.Models.Bodegas>)ViewBag.listaProductos);
+    //var mBodega=
+    WebGrid grid=new WebGrid(Model.lstbcBodega);
+@grid.GetHtml(htmlAttributes:new {@id="grid"} ,columns:new [] {
+grid.Column("Codigo","Codigo "),
+grid.Column("Unidad"," Unidad"),
+ grid.Column("Descripcion"),
+ grid.Column("Cantidad"," Stock"),
+grid.Column("PrecioMenor"," Precio Minorista"),
+grid.Column("PrecioMayor"," Precio Mayorista"),
+grid.Column("","Cantidad cotizar",format:@<text> @Html.TextBox("cotizar"+new {id=item.Identificador},null,htmlAttributes: new {mouseup="CalculaImporte("+item.Identificador+");"})</text>),
+grid.Column("","Generar impresion",format:@<text> @Html.ActionLink("Imprimir","MetodoImpresion","Cotizaciones",htmlAttributes: new {onclick="return window.print();"})</text>)
+})    
+}

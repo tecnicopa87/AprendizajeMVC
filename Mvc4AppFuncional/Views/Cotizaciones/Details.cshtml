@@ -1,0 +1,43 @@
+﻿@model Mvc4AppFuncional.Models.Cotizacions
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Cotizacions</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Clientes.NombreCliente)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Clientes.NombreCliente)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaCotizacion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaCotizacion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Gironegocio)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Gironegocio)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Monto)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Monto)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

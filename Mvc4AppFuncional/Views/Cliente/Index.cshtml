@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Mvc4AppFuncional.Models.Clientes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div style ="text-align:right">@ViewData["UsuarioWindows"]</div>
+<p>
+    @Html.ActionLink("Nuevo cliente", "Create")
+    @Html.List(new string[] {"Empleado","Empresario","Inversor","Dueño de Negocio"})<!--éste es mi HelperPersonalizado -->    
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NoCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GiroEmpresarial)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GiroEmpresarial)
+        </td>
+        <td>
+            @Html.ActionLink("Modificar", "Edit", new {  id=item.NoCliente }) |
+            @Html.ActionLink("Details", "Details", new {  id=item.NoCliente  }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
+ 

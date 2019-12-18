@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Mvc4AppFuncional.Models.Categorias>
+
+@{
+    ViewBag.Title = "Categorias";
+}
+
+<h2>Catalogo General</h2>
+<style>
+    .fuente-e {
+        font-family: 'Angsana New';
+        color: #00ff21;
+        text-decoration: none;
+        font-size :large;
+    }
+</style>
+<p>
+    @Html.ActionLink("Nueva Categoria", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdCategoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreCategoria)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdCategoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreCategoria)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.IdCategoria }, new  { @class="fuente-e"}) |
+            
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdCategoria }, new  { @class="fuente-e"})
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,26 @@
+﻿@model List<Mvc4AppFuncional.Models.Bodegas>
+@Styles.Render("~/Content/chartgraficas/Chart.css")
+@Scripts.Render("~/Scripts/chartgraficas/Chart.js")
+
+<div>
+    <canvas id="grfInventario" width="400" height="300"></canvas>
+    <p>Este texto proviene de la vista _verGrafico ....pendiente uso de Chart</p>
+</div>
+<script>
+    var miCanvas=document.getElementById("grfInventario").getContext("2d");
+    //var chart=new Chart(miCanvas,{
+    //    type:"bar",
+    //    data:{
+    //        labels:[model.Descripcion],
+    //        datasets:[
+    //            {
+    //                label:"Demanda de productos",
+    //                backgroundColor:"rgb(0,20,55)",
+    //                borderColor:"rgb(255,255,0)",
+    //                data:[model.Cantidad]
+    //            }]
+    //    }
+    //})
+
+</script>
+

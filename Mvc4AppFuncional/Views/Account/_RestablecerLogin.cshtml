@@ -1,0 +1,12 @@
+﻿@model Mvc4AppFuncional.Models.LoginModel
+
+@{
+    ViewBag.Title = "Restablece Password";
+}
+@*@using (Html.BeginForm("RestablecerLogin", "AccountController",FormMethod.Post)){*@
+
+    @Html.HiddenFor(model=>Model.UserName);
+     <Label>Contrasena temporal</label>ViewBag.Passtmp;
+    <br />
+    <input type="submit" name="restablece" value="Restablecer" />
+@*}*@

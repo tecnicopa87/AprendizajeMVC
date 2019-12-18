@@ -1,0 +1,172 @@
+﻿@model Mvc4AppFuncional.Models.BodegaCotizacionSheme
+
+@{
+    ViewBag.Title = "Index";
+}
+  @Scripts.Render("~/bundles/jquery")
+<h2>Crear Cotizacion</h2>
+
+<p>
+    @Html.ActionLink("Create Nueva", "Create")
+</p>
+
+<div style="text-align:left">Bienvenido: @ViewBag.NombreUsuario</div>
+@using (Html.BeginForm(null, null, FormMethod.Post) ){  
+     
+<table>
+    <tr>  
+    @*@Html.DisplayFor(m=>Model.lstbcCotizacion)
+    @Html.DisplayFor(m=>Model.lstbcCategoria)
+    @Html.DisplayFor(m=>Model.lstbcBodega)
+    @Html.DropDownListFor(m=>m.lstbcCotizacion,new SelectList(Model.lstbcCotizacion),"Id","NoCliente") 
+        @Html.DropDownListFor(m=>m.lstbcBodega,new SelectList(Model.lstbcBodega),"Identificador","Descripcion")     *@
+            @*@Html.DisplayNameFor(model => model.Clientes.NombreCliente) *@     
+        <th>
+            @*@Html.DisplayNameFor(model => model.FechaCotizacion)*@
+        </th>        
+        <th>
+            @Html.Label("lblcatalogo","Catalogo de productos")
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+        @*@Html.DropDownListFor(m => m.lstbcCategoria, new SelectList(Model.lstbcCategoria, "IdCategoria", "NombreCategoria"), new {  onchange = "$(this).parent('form:first').submit();"  })*@
+        @Html.DropDownListFor(m => m.IdCategoria, new SelectList(Model.vCategorias, "IdCategoria", "NombreCategoria")," seleccione categoria" ,new {@id="SelID" ,onchange = "$(this).parent('form:first').submit();" })
+    </tr>
+    <tr></tr>
+</table>@*
+    @Html.ListBoxFor(m=>m.lstbcCategoria,new SelectList(Model.lstbcCategoria, "IdCategoria", "NombreCategoria"))
+
+    <table>
+        @for (int i = 0; i < Model.vCategorias.Count; i++)
+        {
+            <tr>
+                <td>@Html.HiddenFor(m=>Model.vCategorias[i].IdCategoria)</td>
+                <td>@Html.HiddenFor(m=>Model.vCategorias[i].NombreCategoria)</td>
+            </tr>
+        }
+    </table>
+    <table>
+        @for (int i = 0; i < Model.vBodegas.Count; i++)
+        {
+            <tr>
+                <td>@Html.HiddenFor(m => Model.vBodegas[i].Codigo)</td>
+                <td>@Html.HiddenFor(m => Model.vBodegas[i].Categorias)</td>
+                <td>@Html.HiddenFor(m => Model.vBodegas[i].Costo)</td>
+                <td>@Html.HiddenFor(m => Model.vBodegas[i].CveProvedor)</td>
+                <td>@Html.HiddenFor(m => Model.vBodegas[i].Descripcion)</td>
+            </tr>
+        }
+    </table>*@
+}
+<script type ="text/javascript" >
+    $(document).ready(function () {
+        $('#SelID').change(function (evt) {
+            $('#NombreCategoria').val($('#SelID option:selected').text().trim());
+           // alert('evento value=' + $('#SelID option:selected').text());
+        })
+    });
+    </script>
+<script type ="text/javascript" >
+    $(document).ready(function () {
+        $('table').addClass('table-responsive');
+    })
+    //$(document).ready(function CalculaImporte(id) {
+    //    var product = id;
+    //    //var cantidad =  $('cotiza');
+    //    var descrip='Descripcion';
+    //    alert('desea cotizar  de'+ product  +'');
+    //});
+</script>
+@{
+    //WebGrid grid = new WebGrid((IEnumerable<Mvc4AppFuncional.Models.Bodegas>)ViewBag.listaProductos);
+    //var mBodega=
+      
+    WebGrid grid = new WebGrid(Model.vBodegas);
+@grid.GetHtml(columns: new[] {
+grid.Column("Codigo","Codigo "),
+grid.Column("Unidad"," Unidad"),
+ grid.Column("Descripcion"),
+ grid.Column("Cantidad"," Stock"),
+grid.Column("PrecioMenor"," Precio Minorista",format:@<text><label id="prec+@item.Identificador">@item.PrecioMenor</label></text>),
+grid.Column("PrecioMayor"," Precio Mayorista"),
+grid.Column("Cotiz","Cantidad cotizar",format:@<text><input type="text" maxlength="10" size="10" id="cant-cotiza+@item.Identificador" name="prodids" value="" onChange="calcularCotizacion(this);" /> </text>),
+grid.Column("Importe","Importe",format:@<text><input type="text" maxlength="25" size="25" id="imp-cotiza+@item.Identificador" name="importids" value="" readonly="true" /> </text>),
+grid.Column("Ptr","Generar impresion",format:@<text> @Html.ActionLink("Imprimir","MetodoImpresion","Cotizaciones",htmlAttributes: new {onclick="return window.print();"})</text>)
+})
+    <br />
+         
+    <script type="text/javascript">
+        function calcularCotizacion(ct) {
+                                
+            var idc = ct.id;// + ' para ' + $(this).attr("id")); <- marca undefined !!
+            var idactual = parseInt(idc.replace("cant-cotiza+", ""), 10);
+            var strprec = 'prec+' + idactual;
+            //alert('idprec:' + strprec);
+            //var precio = $('#prec+' + idactual).text;// un label no tiene atribute value
+
+            //alert('objprec:' + $('[id=' + strprec + ']'));<- unrecognized expression
+            //var selectestatic =  $('#prec+2').text; <- undefined
+            precio = document.getElementById(strprec).innerText;       
+                     
+            var operacion = ct.value * precio;
+            //alert('operacion:' + operacion+ ' para: #imp-cotiza+'+ idactual);
+            //$('#imp-cotiza+' + idactual).val(operacion); <- revisar xq no asigna valor ??
+            document.getElementById('imp-cotiza+' + idactual).value = operacion;
+            //$('[id^=imp-cotiza+]').val(operacion);
+            subtotalCotizacion();
+
+            function subtotalCotizacion() {
+                var subtotal = 0;
+                //var _total = 0;
+                $("input[id^='imp-cotiza+']").each(function () {
+                    var idI = parseInt(this.id.replace("imp-cotiza+", ""), 10);
+                    //alert('id:' + idI + ' this).val:' + $(this).val());
+                    var importe =($(this).val());//document.getElementById("imp-cotiza+"+idI).value;
+                    //alert('parseFloat(importe):' + parseFloat(importe));
+                    if (parseFloat(importe) != null && parseFloat(importe)>0) {
+                       // alert('parseFloat(import):' + parseFloat(importe));
+                        subtotal = parseFloat(subtotal) + parseFloat(importe);                      
+                    }                    
+                                                 
+                });                
+                document.getElementById('cotizTotal').value ="$ "+(subtotal);//parseFloat (_total);
+            }
+            }
+    </script>
+    <div style="text-align:right"><label id="lbltotal">Subtotal :</label><input type="text" id="cotizTotal" name="sumatoria" style="font-weight:200" value=""  /></div>
+    
+    //La sig línea funcionó parcialmente en WebGrid (habría q validar otro evento equivalente a 'onblur')
+    //grid.Column("","Cantidad ",format:@<text> @Html.TextBox("cant"+new{@id=item.Identificador},null,htmlAttributes: new {onblur="javascript:return $(function(){ function calculaPedido("+new {@id=item.Identificador}+");});"})</text>),
+    
+    <div class="modal fade" id="catClients" runat="server" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <script type ="text/javascript"> 
+                    function calculaPedido (ind){
+                        $(document).ready(function (e) {
+                            alert('onclick desde textbox'+ind);
+                            document.cookie = "ajax-sub="+ind;               
+                            //$.ajax({
+                            //    type:"GET",
+                            //    url: 'Compras.aspx/ObtenClientesPorClave',
+                            //    data: "{}",
+                            //    async: true,
+                            //    success: function (data) {
+                            //        var s=data.lenght;
+                            //        //alert('valor[0] :' + data[0].value + ' data:'+data);
+                            //    },
+                            //    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            //        var error = eval("(" + XMLHttpRequest.responseText + ")");
+                            //        alert(error.Message);
+                            //    }
+                            //});
+                        }); 
+                    }
+                    </script>
+            </div>
+
+        </div>
+        </div>
+
+}

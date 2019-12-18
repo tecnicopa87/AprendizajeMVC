@@ -1,0 +1,63 @@
+﻿@model Mvc4AppFuncional.Models.Clientes
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "*", new {@class="text-danger" })
+
+    <fieldset>
+        <legend>Cliente</legend>
+
+        <div class="editor-label">
+            @Html.Label("No de Cliente:")
+            @Html.HiddenFor(model=>model .NoCliente )
+        </div>
+        <div >        
+              @Html.DisplayFor(model => model.NoCliente)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NombreCliente)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NombreCliente)
+            @Html.ValidationMessageFor(model => model.NombreCliente, "Obligatorio", new { @class ="text-danger"})
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GiroEmpresarial)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.GiroEmpresarial)
+            @Html.ValidationMessageFor(model => model.GiroEmpresarial)
+        </div>
+        <br />
+        <script type ="text/javascript" >function Estadistica(){
+    var ckestadistica = document.cookie.indexOf("info_adicional=");
+    if (ckestadistica !=-1) {
+        $('[#info]').hide(2000);
+    }
+}
+        </script>
+        <p id="info">
+       <label style ="font-family :Batang ">Información adicional:</label>
+    <label>Que volumen de mercancía maneja?</label>@Html.ListBox("lista",(IEnumerable<SelectListItem >) @ViewBag.Volummercancia)
+            </p>
+        <p>
+            <input type="submit" onclick ="if (!window.confirm('Esta seguro de guardar cambios?')) return false;" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

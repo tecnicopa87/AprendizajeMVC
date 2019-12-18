@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AlmacenModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="AlmacenModelStoreContainer">
+          <EntitySet Name="Bodegas" EntityType="AlmacenModel.Store.Bodegas" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Categorias" EntityType="AlmacenModel.Store.Categorias" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Clientes" EntityType="AlmacenModel.Store.Clientes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Cotizaciones" EntityType="AlmacenModel.Store.Cotizaciones" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Ventas" EntityType="AlmacenModel.Store.Ventas" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__Cotizacio__NoCli__15502E78" Association="AlmacenModel.Store.FK__Cotizacio__NoCli__15502E78">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Cotizaciones" EntitySet="Cotizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category" Association="AlmacenModel.Store.FK_Category">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Bodegas" EntitySet="Bodegas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Bodegas">
+          <Key>
+            <PropertyRef Name="Identificador" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" Nullable="false" />
+          <Property Name="FechaIngreso" Type="datetime" />
+          <Property Name="Responsable" Type="varchar" MaxLength="50" />
+          <Property Name="Codigo" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="Unidad" Type="nchar" MaxLength="10" />
+          <Property Name="Cantidad" Type="float" />
+          <Property Name="Costo" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="CveProvedor" Type="nchar" MaxLength="10" />
+          <Property Name="PrecioMenor" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="PrecioMayor" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="Identificador" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" Nullable="false" />
+          <Property Name="NombreCategoria" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="NoCliente" />
+          </Key>
+          <Property Name="NoCliente" Type="int" Nullable="false" />
+          <Property Name="NombreCliente" Type="varchar" MaxLength="50" />
+          <Property Name="GiroEmpresarial" Type="varchar" MaxLength="50" />
+          <Property Name="PrioridadVenta" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Cotizaciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="NoCliente" Type="int" Nullable="false" />
+          <Property Name="FechaCotizacion" Type="datetime" />
+          <Property Name="Gironegocio" Type="varchar" MaxLength="50" />
+          <Property Name="Monto" Type="decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="FolioVenta" />
+          </Key>
+          <Property Name="FolioVenta" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FechaRealizacion" Type="datetime" Nullable="false" />
+          <Property Name="MontoSubtotal" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Cotizacio__NoCli__15502E78">
+          <End Role="Clientes" Type="AlmacenModel.Store.Clientes" Multiplicity="1" />
+          <End Role="Cotizaciones" Type="AlmacenModel.Store.Cotizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="NoCliente" />
+            </Principal>
+            <Dependent Role="Cotizaciones">
+              <PropertyRef Name="NoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category">
+          <End Role="Categorias" Type="AlmacenModel.Store.Categorias" Multiplicity="1" />
+          <End Role="Bodegas" Type="AlmacenModel.Store.Bodegas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Bodegas">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AlmacenModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AlmacenEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Bodegas" EntityType="AlmacenModel.Bodegas" />
+          <EntitySet Name="Categorias" EntityType="AlmacenModel.Categorias" />
+          <EntitySet Name="Clientes" EntityType="AlmacenModel.Clientes" />
+          <EntitySet Name="Ventas" EntityType="AlmacenModel.Ventas" />
+          <AssociationSet Name="FK_Category" Association="AlmacenModel.FK_Category">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Bodegas" EntitySet="Bodegas" />
+          </AssociationSet>
+          <EntitySet Name="Cotizaciones" EntityType="AlmacenModel.Cotizaciones" />
+          <AssociationSet Name="FK__Cotizacio__NoCli__15502E78" Association="AlmacenModel.FK__Cotizacio__NoCli__15502E78">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Cotizaciones" EntitySet="Cotizaciones" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Bodegas">
+          <Key>
+            <PropertyRef Name="Identificador" />
+          </Key>
+          <Property Type="Int32" Name="IdCategoria" Nullable="false" />
+          <Property Type="DateTime" Name="FechaIngreso" Precision="3" />
+          <Property Type="String" Name="Responsable" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Codigo" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Descripcion" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Unidad" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="Double" Name="Cantidad" />
+          <Property Type="Decimal" Name="Costo" Precision="19" Scale="4" />
+          <Property Type="String" Name="CveProvedor" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="Decimal" Name="PrecioMenor" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="PrecioMayor" Precision="19" Scale="4" />
+          <Property Type="Int64" Name="Identificador" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Categorias" Relationship="AlmacenModel.FK_Category" FromRole="Bodegas" ToRole="Categorias" />
+        </EntityType>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Type="Int32" Name="IdCategoria" Nullable="false" />
+          <Property Type="String" Name="NombreCategoria" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Bodegas" Relationship="AlmacenModel.FK_Category" FromRole="Categorias" ToRole="Bodegas" />
+        </EntityType>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="NoCliente" />
+          </Key>
+          <Property Type="Int32" Name="NoCliente" Nullable="false" />
+          <Property Type="String" Name="NombreCliente" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GiroEmpresarial" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PrioridadVenta" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cotizaciones" Relationship="AlmacenModel.FK__Cotizacio__NoCli__15502E78" FromRole="Clientes" ToRole="Cotizaciones" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="FolioVenta" />
+          </Key>
+          <Property Type="Int64" Name="FolioVenta" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="FechaRealizacion" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="MontoSubtotal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <Association Name="FK_Category">
+          <End Type="AlmacenModel.Categorias" Role="Categorias" Multiplicity="1" />
+          <End Type="AlmacenModel.Bodegas" Role="Bodegas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Bodegas">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cotizaciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="NoCliente" Nullable="false" />
+          <Property Type="DateTime" Name="FechaCotizacion" Precision="3" />
+          <Property Type="String" Name="Gironegocio" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="Monto" Precision="19" Scale="4" />
+          <NavigationProperty Name="Clientes" Relationship="AlmacenModel.FK__Cotizacio__NoCli__15502E78" FromRole="Cotizaciones" ToRole="Clientes" />
+        </EntityType>
+        <Association Name="FK__Cotizacio__NoCli__15502E78">
+          <End Type="AlmacenModel.Clientes" Role="Clientes" Multiplicity="1" />
+          <End Type="AlmacenModel.Cotizaciones" Role="Cotizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="NoCliente" />
+            </Principal>
+            <Dependent Role="Cotizaciones">
+              <PropertyRef Name="NoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AlmacenModelStoreContainer" CdmEntityContainer="AlmacenEntities">
+          <EntitySetMapping Name="Bodegas">
+            <EntityTypeMapping TypeName="AlmacenModel.Bodegas">
+              <MappingFragment StoreEntitySet="Bodegas">
+                <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+                <ScalarProperty Name="PrecioMayor" ColumnName="PrecioMayor" />
+                <ScalarProperty Name="PrecioMenor" ColumnName="PrecioMenor" />
+                <ScalarProperty Name="CveProvedor" ColumnName="CveProvedor" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Responsable" ColumnName="Responsable" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="AlmacenModel.Categorias">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="AlmacenModel.Clientes">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="PrioridadVenta" ColumnName="PrioridadVenta" />
+                <ScalarProperty Name="GiroEmpresarial" ColumnName="GiroEmpresarial" />
+                <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+                <ScalarProperty Name="NoCliente" ColumnName="NoCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ventas">
+            <EntityTypeMapping TypeName="AlmacenModel.Ventas">
+              <MappingFragment StoreEntitySet="Ventas">
+                <ScalarProperty Name="MontoSubtotal" ColumnName="MontoSubtotal" />
+                <ScalarProperty Name="FechaRealizacion" ColumnName="FechaRealizacion" />
+                <ScalarProperty Name="FolioVenta" ColumnName="FolioVenta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cotizaciones">
+            <EntityTypeMapping TypeName="AlmacenModel.Cotizaciones">
+              <MappingFragment StoreEntitySet="Cotizaciones">
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Gironegocio" ColumnName="Gironegocio" />
+                <ScalarProperty Name="FechaCotizacion" ColumnName="FechaCotizacion" />
+                <ScalarProperty Name="NoCliente" ColumnName="NoCliente" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

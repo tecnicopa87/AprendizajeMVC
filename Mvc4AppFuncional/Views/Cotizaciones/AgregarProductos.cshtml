@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Mvc4AppFuncional.Models.Bodegas>
+
+@{
+    ViewBag.Title = "AgregarProductos";
+}
+
+<h2>AgregarProductos</h2>
+<script>
+    var leerfrm = sessionStorage['chks'];
+    alert(leerfrm);
+</script>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class ="table-responsive">
+<table>
+    <tr>       
+        <th>
+            @Html.DisplayNameFor(model => model.FechaIngreso)
+        </th>      
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Costo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CveProvedor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioMenor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioMayor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Identificador)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>        
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaIngreso)
+        </td>       
+        <td>
+            @Html.DisplayFor(modelItem => item.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Costo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CveProvedor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrecioMenor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrecioMayor)
+        </td>
+        <td>
+            @Html.HiddenFor(modelItem => item.Identificador)
+        </td>
+        <td>
+           
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
+    </div>

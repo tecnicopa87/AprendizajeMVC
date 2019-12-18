@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AlmacenModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="AlmacenEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Bodegas" EntityType="AlmacenModel.Bodegas" />
+    <EntitySet Name="Categorias" EntityType="AlmacenModel.Categorias" />
+    <EntitySet Name="Clientes" EntityType="AlmacenModel.Clientes" />
+    <EntitySet Name="Ventas" EntityType="AlmacenModel.Ventas" />
+    <AssociationSet Name="FK_Category" Association="AlmacenModel.FK_Category">
+      <End Role="Categorias" EntitySet="Categorias" />
+      <End Role="Bodegas" EntitySet="Bodegas" />
+    </AssociationSet>
+    <EntitySet Name="Cotizaciones" EntityType="AlmacenModel.Cotizaciones" />
+    <AssociationSet Name="FK__Cotizacio__NoCli__15502E78" Association="AlmacenModel.FK__Cotizacio__NoCli__15502E78">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Cotizaciones" EntitySet="Cotizaciones" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bodegas">
+    <Key>
+      <PropertyRef Name="Identificador" />
+    </Key>
+    <Property Type="Int32" Name="IdCategoria" Nullable="false" />
+    <Property Type="DateTime" Name="FechaIngreso" Precision="3" />
+    <Property Type="String" Name="Responsable" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Codigo" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Descripcion" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Unidad" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Type="Double" Name="Cantidad" />
+    <Property Type="Decimal" Name="Costo" Precision="19" Scale="4" />
+    <Property Type="String" Name="CveProvedor" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Type="Decimal" Name="PrecioMenor" Precision="19" Scale="4" />
+    <Property Type="Decimal" Name="PrecioMayor" Precision="19" Scale="4" />
+    <Property Type="Int64" Name="Identificador" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Categorias" Relationship="AlmacenModel.FK_Category" FromRole="Bodegas" ToRole="Categorias" />
+  </EntityType>
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="IdCategoria" />
+    </Key>
+    <Property Type="Int32" Name="IdCategoria" Nullable="false" />
+    <Property Type="String" Name="NombreCategoria" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Bodegas" Relationship="AlmacenModel.FK_Category" FromRole="Categorias" ToRole="Bodegas" />
+  </EntityType>
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="NoCliente" />
+    </Key>
+    <Property Type="Int32" Name="NoCliente" Nullable="false" />
+    <Property Type="String" Name="NombreCliente" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="GiroEmpresarial" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="PrioridadVenta" MaxLength="3" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cotizaciones" Relationship="AlmacenModel.FK__Cotizacio__NoCli__15502E78" FromRole="Clientes" ToRole="Cotizaciones" />
+  </EntityType>
+  <EntityType Name="Ventas">
+    <Key>
+      <PropertyRef Name="FolioVenta" />
+    </Key>
+    <Property Type="Int64" Name="FolioVenta" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="FechaRealizacion" Nullable="false" Precision="3" />
+    <Property Type="Decimal" Name="MontoSubtotal" Nullable="false" Precision="19" Scale="4" />
+  </EntityType>
+  <Association Name="FK_Category">
+    <End Type="AlmacenModel.Categorias" Role="Categorias" Multiplicity="1" />
+    <End Type="AlmacenModel.Bodegas" Role="Bodegas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorias">
+        <PropertyRef Name="IdCategoria" />
+      </Principal>
+      <Dependent Role="Bodegas">
+        <PropertyRef Name="IdCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Cotizaciones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="Int32" Name="NoCliente" Nullable="false" />
+    <Property Type="DateTime" Name="FechaCotizacion" Precision="3" />
+    <Property Type="String" Name="Gironegocio" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="Monto" Precision="19" Scale="4" />
+    <NavigationProperty Name="Clientes" Relationship="AlmacenModel.FK__Cotizacio__NoCli__15502E78" FromRole="Cotizaciones" ToRole="Clientes" />
+  </EntityType>
+  <Association Name="FK__Cotizacio__NoCli__15502E78">
+    <End Type="AlmacenModel.Clientes" Role="Clientes" Multiplicity="1" />
+    <End Type="AlmacenModel.Cotizaciones" Role="Cotizaciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="NoCliente" />
+      </Principal>
+      <Dependent Role="Cotizaciones">
+        <PropertyRef Name="NoCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

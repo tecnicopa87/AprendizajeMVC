@@ -1,0 +1,29 @@
+﻿@model Mvc4AppFuncional.Models.Categorias
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Categorias</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IdCategoria)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IdCategoria)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NombreCategoria)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NombreCategoria)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Mvc4AppFuncional.Models.Bodegas>
+
+@{
+    ViewBag.Title = "Almacen";
+}
+
+<h2>Almacen</h2>
+
+<p>
+    @Html.ActionLink("Ingresar Nuevo", "Create")   
+</p>
+
+@*<link href="/Content/themes/base/jquery.dataTables.css" rel="stylesheet" type="text/css" />*@
+<link href="/Content/themes/base/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+<style>
+    .centrar {
+        font-size:14px;
+        text-align:center;
+    }
+</style>
+<div class ="container clear-fix">
+    <div class="row">
+        <div class="table-responsive">
+            <table id="mitabla" class="table" >
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Categorias.NombreCategoria)
+                            @* @Html.Label("lblCategoria"," Categoria") <--Igualmente es válido*@
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FechaIngreso)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Responsable)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Codigo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Descripcion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Unidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cantidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Costo)
+                        </th>                      
+                        <th>
+                            @Html.DisplayNameFor(model => model.Identificador)
+                        </th>
+                          @*<th>
+                            @Html.DisplayNameFor(model => model.CveProvedor)
+                        </th>*@
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Categorias.NombreCategoria)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaIngreso)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Responsable)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Codigo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unidad)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cantidad)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Costo)
+                            </td>                            
+                            <td class ="centrar">
+                                @Html.DisplayFor(modelItem => item.Identificador)
+                            </td>
+                            <td>
+                                @Html.HiddenFor(modelItem => item.CveProvedor)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Identificador }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                            </td>
+                        </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <p> poco de texto que se visialice en una columna a la derecha    ...</p>
+            <br />
+        </div>
+    </div>
+</div>
+@*<script src="/Scripts/jquery-3.4.1.js"></script>*@
+@*<script src="/Scripts/jquery.dataTables.js"></script>*@
+<script src="/Scripts/jquery.dataTables.min.js"></script>
+<script type="text/javascript">   
+    $(document).ready(function () {
+        //$('#mitabla').DataTable();
+        $('#mitabla')
+        .addClass('nowrap')
+        .DataTable({
+            "lengthMenu": [8, 15, 18],
+            "language": { "search": "Buscar producto:" },
+            //"language":{"lengthMenu":"Mostrar num. registros"},
+            responsive: true,
+            columnDefs: [
+                { targets: [-1, -3], className: 'dt-body-right' }
+            ]
+        });
+} );
+    </script>
+   

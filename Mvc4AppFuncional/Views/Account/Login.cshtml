@@ -1,0 +1,93 @@
+﻿@model Mvc4AppFuncional.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<section id="loginForm">
+<h2>Use a local account to log in.</h2>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Log in Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
+            </li>
+            <li id="pswtmp">
+
+            </li>
+            <li>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+            </li>
+        </ol>
+        <input type="submit" value="Log in" />
+    </fieldset>
+    <p>
+        @Html.ActionLink("Register", "Register") if you don't have an account        
+        <br />              
+        <input type="checkbox" id ="chkRestablece" name="chkRestablece" value="false"  /> Restablecer contraseña       
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#chkRestablece").change(function () {
+                    var chkv = $("#chkRestablece").attr('value');
+                    //var chk = $("#chkRestablece").attr('checked');
+                    //alert('change '+chkv);
+                    var txtuser = $("#UserName").val();                   
+                    txtuser = (txtuser == null) ? " " : txtuser;
+                    //alert(txtuser);
+                    var url = '@Url.Action("RestablecerLogin", "Restablish", new { usuario="x" })';
+                    url = url.replace("x", encodeURIComponent(txtuser));
+                    if (chkv== true) {
+                        alert('chek=true');
+                        $("#pswtmp").html('<Label>Contrasena temporal</label>ViewBag.Passtmp;<br /><input type="submit" name="restablece" value="Restablecer" />');
+                    }
+                    if ($("#chkRestablece").is(':checked')) {
+                        //alert('chekeado');
+                        //$("#pswtmp").html('<Label>Contrasena temporal</label>ViewBag.Passtmp;<br />Html.ActionLink("Generar","RestablecerLogin")');
+                        $("#pswtmp").html("<input type='button' value='Generar' onclick='ObtenToken("+url+"+)'/>");//'<Label>Contrasena temporal</label><br /><a href='+url+'>Generar</a>');
+                    }
+                    else {
+                        $("#pswtmp").html('');
+                    }
+                });
+            });
+        </script>
+     <script>
+         function ObtenToken(_url){
+             $.ajax({
+                 url: _url,
+                 type: 'POST',
+                 data: { user: $("#UserName").val() },
+                 success: function (respon) {
+                     $("#pswtmp").text(respon);
+                 }
+             });
+         }
+     </script>
+    </p>
+}
+</section>
+
+<section class="social" id="socialLoginForm">
+    <h2>Use another service to log in.</h2>
+    @*@Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })*@
+</section>
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+}

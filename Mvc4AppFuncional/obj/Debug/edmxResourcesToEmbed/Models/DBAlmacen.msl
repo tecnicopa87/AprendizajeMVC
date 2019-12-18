@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AlmacenModelStoreContainer" CdmEntityContainer="AlmacenEntities">
+    <EntitySetMapping Name="Bodegas">
+      <EntityTypeMapping TypeName="AlmacenModel.Bodegas">
+        <MappingFragment StoreEntitySet="Bodegas">
+          <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+          <ScalarProperty Name="PrecioMayor" ColumnName="PrecioMayor" />
+          <ScalarProperty Name="PrecioMenor" ColumnName="PrecioMenor" />
+          <ScalarProperty Name="CveProvedor" ColumnName="CveProvedor" />
+          <ScalarProperty Name="Costo" ColumnName="Costo" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="Responsable" ColumnName="Responsable" />
+          <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+          <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categorias">
+      <EntityTypeMapping TypeName="AlmacenModel.Categorias">
+        <MappingFragment StoreEntitySet="Categorias">
+          <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
+          <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="AlmacenModel.Clientes">
+        <MappingFragment StoreEntitySet="Clientes">
+          <ScalarProperty Name="PrioridadVenta" ColumnName="PrioridadVenta" />
+          <ScalarProperty Name="GiroEmpresarial" ColumnName="GiroEmpresarial" />
+          <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+          <ScalarProperty Name="NoCliente" ColumnName="NoCliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ventas">
+      <EntityTypeMapping TypeName="AlmacenModel.Ventas">
+        <MappingFragment StoreEntitySet="Ventas">
+          <ScalarProperty Name="MontoSubtotal" ColumnName="MontoSubtotal" />
+          <ScalarProperty Name="FechaRealizacion" ColumnName="FechaRealizacion" />
+          <ScalarProperty Name="FolioVenta" ColumnName="FolioVenta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cotizaciones">
+      <EntityTypeMapping TypeName="AlmacenModel.Cotizaciones">
+        <MappingFragment StoreEntitySet="Cotizaciones">
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="Gironegocio" ColumnName="Gironegocio" />
+          <ScalarProperty Name="FechaCotizacion" ColumnName="FechaCotizacion" />
+          <ScalarProperty Name="NoCliente" ColumnName="NoCliente" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

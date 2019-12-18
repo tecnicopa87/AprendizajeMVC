@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Mvc4AppFuncional.Models.Bodegas>
+@{
+    ViewBag.Title = "ListaProductos";
+}
+
+<h2>Lista de Productos</h2>
+<script>
+$(document).ready(function() {
+    $('.btn').on('click', function (e) {
+        e.preventDefault();
+        var dataString = $('form').serialize();
+        
+        //APROVECHANDO RECURSOS HTML5                
+        sessionStorage.setItem('chks', dataString);
+        var colecion=document.getElementsByName('chkCalifica');
+        var i = 0;
+        //alert(colecion);
+        var arreglo = dataString.split('&');
+        console.log(colecion);
+        console.log(arreglo);
+        
+        for (var chk in arreglo)
+        {
+            debugger;
+            console.log(chk);
+            if (chk == true) {
+                //var id=$('')
+                alert(i + 'es activo');
+
+            }
+        }
+
+        //alert(' []=' + sessionStorage['chks']);
+        //window.location = "../Cotizaciones/AgregarProductos";
+        return true;
+    }); 
+});
+</script>
+@using (Html.BeginForm("AgregarProductos", "Cotizaciones", FormMethod.Get))
+{
+<div style="text-align:right"><input type="submit"  value="Agregar mi pedido" class="btn btn-success"/></div>
+
+<div class="table-responsive">
+    <div class="table">
+@{
+    WebGrid grid = new WebGrid(Model,null,null,6);
+    
+}
+@grid.GetHtml(columns: new [] {
+    grid.Column("Identificador","ID"),
+    grid.Column("Codigo"),
+    grid.Column("Unidad"),
+    grid.Column("Descripcion"),
+    grid.Column("FechaIngreso",null,format: p=>p.FechaIngreso.ToShortDateString()),
+    grid.Column("Categorias.NombreCategoria"," Categoria"),
+    grid.Column("",header:"Ver mas",format:@<text> @Html.ActionLink("Modifica","Edit",new {id=item.Identificador})</text>),
+grid.Column("",header:"Colum Adicional",format:@<text> @Html.ActionLink("Loguearme","Login","Account")</text>),
+grid .Column("colAgrega",header :"Asignar",format:@<text> @Html.CheckBox("chkCalifica",false,new {id=item.Identificador} )</text>)
+},mode:WebGridPagerModes.Numeric)
+        </div>
+       
+    </div>
+<br />
+@*<div>@{
+    Html.RenderAction("_verGrafico", Model );
+}
+</div>*@
+}

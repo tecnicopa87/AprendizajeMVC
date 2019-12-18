@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AlmacenModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AlmacenModelStoreContainer">
+    <EntitySet Name="Bodegas" EntityType="AlmacenModel.Store.Bodegas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Categorias" EntityType="AlmacenModel.Store.Categorias" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Clientes" EntityType="AlmacenModel.Store.Clientes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cotizaciones" EntityType="AlmacenModel.Store.Cotizaciones" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Ventas" EntityType="AlmacenModel.Store.Ventas" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__Cotizacio__NoCli__15502E78" Association="AlmacenModel.Store.FK__Cotizacio__NoCli__15502E78">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Cotizaciones" EntitySet="Cotizaciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Category" Association="AlmacenModel.Store.FK_Category">
+      <End Role="Categorias" EntitySet="Categorias" />
+      <End Role="Bodegas" EntitySet="Bodegas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bodegas">
+    <Key>
+      <PropertyRef Name="Identificador" />
+    </Key>
+    <Property Name="IdCategoria" Type="int" Nullable="false" />
+    <Property Name="FechaIngreso" Type="datetime" />
+    <Property Name="Responsable" Type="varchar" MaxLength="50" />
+    <Property Name="Codigo" Type="varchar" MaxLength="50" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="Unidad" Type="nchar" MaxLength="10" />
+    <Property Name="Cantidad" Type="float" />
+    <Property Name="Costo" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="CveProvedor" Type="nchar" MaxLength="10" />
+    <Property Name="PrecioMenor" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="PrecioMayor" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="Identificador" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="IdCategoria" />
+    </Key>
+    <Property Name="IdCategoria" Type="int" Nullable="false" />
+    <Property Name="NombreCategoria" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="NoCliente" />
+    </Key>
+    <Property Name="NoCliente" Type="int" Nullable="false" />
+    <Property Name="NombreCliente" Type="varchar" MaxLength="50" />
+    <Property Name="GiroEmpresarial" Type="varchar" MaxLength="50" />
+    <Property Name="PrioridadVenta" Type="varchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="Cotizaciones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="NoCliente" Type="int" Nullable="false" />
+    <Property Name="FechaCotizacion" Type="datetime" />
+    <Property Name="Gironegocio" Type="varchar" MaxLength="50" />
+    <Property Name="Monto" Type="decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="Ventas">
+    <Key>
+      <PropertyRef Name="FolioVenta" />
+    </Key>
+    <Property Name="FolioVenta" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FechaRealizacion" Type="datetime" Nullable="false" />
+    <Property Name="MontoSubtotal" Type="money" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Cotizacio__NoCli__15502E78">
+    <End Role="Clientes" Type="AlmacenModel.Store.Clientes" Multiplicity="1" />
+    <End Role="Cotizaciones" Type="AlmacenModel.Store.Cotizaciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="NoCliente" />
+      </Principal>
+      <Dependent Role="Cotizaciones">
+        <PropertyRef Name="NoCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Category">
+    <End Role="Categorias" Type="AlmacenModel.Store.Categorias" Multiplicity="1" />
+    <End Role="Bodegas" Type="AlmacenModel.Store.Bodegas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorias">
+        <PropertyRef Name="IdCategoria" />
+      </Principal>
+      <Dependent Role="Bodegas">
+        <PropertyRef Name="IdCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

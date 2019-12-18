@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="edee6ffe4bc2462594ae8e56120a4df2" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="AlmacenModel.Bodegas" Width="1.5" PointX="6.125" PointY="5.25" />
+        <EntityTypeShape EntityType="AlmacenModel.Categorias" Width="1.5" PointX="9.125" PointY="5.875" />
+        <EntityTypeShape EntityType="AlmacenModel.Clientes" Width="1.5" PointX="1.25" PointY="5.25" />
+        <EntityTypeShape EntityType="AlmacenModel.Ventas" Width="1.5" PointX="9" PointY="9.625" />
+        <AssociationConnector Association="AlmacenModel.FK_Category" />
+        <EntityTypeShape EntityType="AlmacenModel.Cotizaciones" Width="1.5" PointX="3.75" PointY="5.75" />
+        <AssociationConnector Association="AlmacenModel.FK__Cotizacio__NoCli__15502E78" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

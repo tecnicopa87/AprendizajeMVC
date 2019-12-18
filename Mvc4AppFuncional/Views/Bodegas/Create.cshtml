@@ -1,0 +1,138 @@
+﻿@model Mvc4AppFuncional.Models.Bodegas
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Create</h2> 
+
+<link href="/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="/Scripts/version1_10_2/jquery-1.10.2.js"></script>
+<script src="/Scripts/jquery-ui.js"></script>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Bodegas</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IdCategoria, "Categorias")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("IdCategoria", String.Empty)
+            @Html.ValidationMessageFor(model => model.IdCategoria)
+        </div>
+        <script type="text/javascript">
+            $m = $.noConflict(true);
+            $m(document).ready(function () {
+                $m("#FechaIngreso").datepicker({
+                    dateFormat: "dd-mm-yy",                    
+                    changeMonth: true,
+                    changeYear: true
+                });
+            });
+        </script>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaIngreso)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaIngreso)
+            
+            @Html.ValidationMessageFor(model => model.FechaIngreso, "*", new { @class = "text-danger" }) 
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Responsable)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Responsable)
+            @Html.ValidationMessageFor(model => model.Responsable)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Codigo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Codigo)
+            @Html.ValidationMessageFor(model => model.Codigo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Descripcion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Descripcion)
+            @Html.ValidationMessageFor(model => model.Descripcion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Unidad)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Unidad)
+            @Html.ValidationMessageFor(model => model.Unidad)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cantidad)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cantidad)
+            @Html.ValidationMessageFor(model => model.Cantidad)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Costo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Costo)
+            @Html.ValidationMessageFor(model => model.Costo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CveProvedor)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CveProvedor)
+            @Html.ValidationMessageFor(model => model.CveProvedor)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PrecioMenor)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PrecioMenor)
+            @Html.ValidationMessageFor(model => model.PrecioMenor)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PrecioMayor)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PrecioMayor)
+            @Html.ValidationMessageFor(model => model.PrecioMayor)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Identificador)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Identificador)
+            @Html.ValidationMessageFor(model => model.Identificador)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
